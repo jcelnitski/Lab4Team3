@@ -18,7 +18,8 @@ public class HTTPClient {
             InetAddress.getByName("127.0.0.1");
             Socket connection = new Socket(serverInetAddress, 80);
             
-            try (OutputStream out = connection.getOutputStream(); BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            try (OutputStream out = connection.getOutputStream(); 
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                 
                 sendGet(out);
                 System.out.println(getResponse(in));
@@ -42,6 +43,8 @@ public class HTTPClient {
     }
     
     private String getResponse(BufferedReader in) {
+        
+        //send post request of diary entry
         
         try {
             
@@ -69,6 +72,5 @@ public class HTTPClient {
     public static void main(String[] args) {
         
         new HTTPClient();
-        
     }
 }

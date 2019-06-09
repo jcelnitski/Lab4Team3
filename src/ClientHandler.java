@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.StringTokenizer;
+import java.io.FileWriter;  
+import java.io.FileReader;  
 
 public class ClientHandler implements Runnable {
     
@@ -40,12 +42,26 @@ public class ClientHandler implements Runnable {
                 StringBuilder responseBuffer = new StringBuilder();
                 responseBuffer.append("<html><h1>WebServer Home Page.... </h1><br>").append("<b>Welcome to my web server!</b><BR>").append("</html>");
                 sendResponse(socket, 200, responseBuffer.toString());
+                FileReader fr=new FileReader("C:\\test\\diary.txt");    
+                int i;    
+                while((i=fr.read())!=-1)    
+                System.out.print((char)i);    
+                //send diary data here
                 
-            } else {
+            } 
+            else if (httpMethod.equals("POST")) {
+                System.out.println("Post method processed");
+                FileWriter fw=new FileWriter("C:\\test\\diary.txt");    
+                fw.write("This is a test entry.");    
+                fw.close();    
+                //file append code here
+                
+            }
+            
+            else {
                 
                 System.out.println("The HTTP method is not recognized");
                 sendResponse(socket, 405, "Method Not Allowed");
-                
             }
             
         } catch (Exception e) {
@@ -94,7 +110,8 @@ public class ClientHandler implements Runnable {
         } catch (IOException ex) {
             
         // Handle exception
-        
+            System.out.println("ERROR "+ex);
+            ex.printStackTrace();
         }
     }
 }

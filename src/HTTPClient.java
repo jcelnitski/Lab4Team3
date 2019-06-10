@@ -1,10 +1,13 @@
 
 import java.io.BufferedReader;
+import static java.io.FileDescriptor.out;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import static java.lang.System.out;
 import java.net.InetAddress;
 import java.net.Socket;
+import static sun.misc.MessageUtils.out;
 
 public class HTTPClient {
     
@@ -42,9 +45,22 @@ public class HTTPClient {
         }
     }
     
+    private void sendPost(OutputStream out)
+    {
+        try{
+                out.write("POST /default\r\n".getBytes());      //TODO write request
+                out.write("User-Agent: Mozilla/5.0\r\n".getBytes());
+                
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     private String getResponse(BufferedReader in) {
         
         //send post request of diary entry
+        
         
         try {
             

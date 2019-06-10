@@ -7,6 +7,10 @@ import java.net.Socket;
 import java.util.StringTokenizer;
 import java.io.FileWriter;  
 import java.io.FileReader;  
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class ClientHandler implements Runnable {
     
@@ -40,12 +44,20 @@ public class ClientHandler implements Runnable {
                 System.out.println("Get method processed");
                 String httpQueryString = tokenizer.nextToken();
                 StringBuilder responseBuffer = new StringBuilder();
-                responseBuffer.append("<html><h1>WebServer Home Page.... </h1><br>").append("<b>Welcome to my web server!</b><BR>").append("</html>");
-                sendResponse(socket, 200, responseBuffer.toString());
-                FileReader fr=new FileReader("C:\\test\\diary.txt");    
-                int i;    
-                while((i=fr.read())!=-1)    
-                System.out.print((char)i);    
+//                responseBuffer.append("<html><h1>WebServer Home Page.... </h1><br>").append("<b>Welcome to my web server!</b><BR>").append("</html>");
+//                sendResponse(socket, 200, responseBuffer.toString());
+//                FileReader fr=new FileReader("C:\\test\\diary.txt");    
+//                int i;    
+//                while((i=fr.read())!=-1) 
+//                    responseBuffer.append((char)i);
+                StringBuilder contentBuilder = new StringBuilder();
+                try (Stream<String> stream = Files.lines( Paths.get("C:\\test\\diary.txt"), StandardCharsets.UTF_8))
+                {
+                    stream.forEach(s -> contentBuilder.append(s).append("\n"));
+                }
+                System.out.println(contentBuilder);
+                sendResponse(socket, 200, contentBuilder.toString());
+//                System.out.print((char)i);    
                 //send diary data here
                 
             } 

@@ -1,14 +1,21 @@
 
 import java.io.BufferedReader;
-import static java.io.FileDescriptor.out;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import static java.lang.System.out;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import static sun.misc.MessageUtils.out;
+
+/* 
+Project: Lab 4
+Purpose Details: GET/POST server
+Course: IST 411
+Author: Team 3
+Date Developed: 9 June 2019
+Last Date Changed: 9 June 2019
+Revision: Fixed socket errors
+*/
 
 public class HTTPClient {
     

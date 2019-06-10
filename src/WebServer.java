@@ -3,6 +3,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/* 
+Project: Lab 4
+Purpose Details: GET/POST server
+Course: IST 411
+Author: Team 3
+Date Developed: 9 June 2019
+Last Date Changed: 9 June 2019
+Revision: Fixed socket errors
+*/
+
 public class WebServer {
     public WebServer() {
         System.out.println("Webserver Started");

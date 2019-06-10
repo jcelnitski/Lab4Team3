@@ -6,11 +6,20 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.StringTokenizer;
 import java.io.FileWriter;  
-import java.io.FileReader;  
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+
+/* 
+Project: Lab 4
+Purpose Details: GET/POST server
+Course: IST 411
+Author: Team 3
+Date Developed: 9 June 2019
+Last Date Changed: 9 June 2019
+Revision: Fixed socket errors
+*/
 
 public class ClientHandler implements Runnable {
     
@@ -42,14 +51,6 @@ public class ClientHandler implements Runnable {
             if (httpMethod.equals("GET")) {
                 
                 System.out.println("Get method processed");
-                String httpQueryString = tokenizer.nextToken();
-                StringBuilder responseBuffer = new StringBuilder();
-//                responseBuffer.append("<html><h1>WebServer Home Page.... </h1><br>").append("<b>Welcome to my web server!</b><BR>").append("</html>");
-//                sendResponse(socket, 200, responseBuffer.toString());
-//                FileReader fr=new FileReader("C:\\test\\diary.txt");    
-//                int i;    
-//                while((i=fr.read())!=-1) 
-//                    responseBuffer.append((char)i);
                 StringBuilder contentBuilder = new StringBuilder();
                 try (Stream<String> stream = Files.lines( Paths.get("/Users/leon/diary.txt"), StandardCharsets.UTF_8))
                 {
@@ -57,8 +58,6 @@ public class ClientHandler implements Runnable {
                 }
                 System.out.println(contentBuilder);
                 sendResponse(socket, 200, contentBuilder.toString());
-//                System.out.print((char)i);    
-                //send diary data here
                 
             } 
             else if (httpMethod.equals("POST")) {
@@ -66,7 +65,7 @@ public class ClientHandler implements Runnable {
                 String payload = in.readLine();
                 System.out.println("Received payload: " + payload);
                 try (FileWriter fw = new FileWriter("/Users/leon/diary.txt", true)) {
-                    fw.append(payload + "\n");
+                    fw.append(payload);
                 }
                 sendResponse(socket, 200, "Entry received!");
             }

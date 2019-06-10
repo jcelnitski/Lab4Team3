@@ -51,7 +51,7 @@ public class ClientHandler implements Runnable {
 //                while((i=fr.read())!=-1) 
 //                    responseBuffer.append((char)i);
                 StringBuilder contentBuilder = new StringBuilder();
-                try (Stream<String> stream = Files.lines( Paths.get("C:\\test\\diary.txt"), StandardCharsets.UTF_8))
+                try (Stream<String> stream = Files.lines( Paths.get("/Users/leon/diary.txt"), StandardCharsets.UTF_8))
                 {
                     stream.forEach(s -> contentBuilder.append(s).append("\n"));
                 }
@@ -63,11 +63,12 @@ public class ClientHandler implements Runnable {
             } 
             else if (httpMethod.equals("POST")) {
                 System.out.println("Post method processed");
-                FileWriter fw=new FileWriter("C:\\test\\diary.txt");    
-                fw.write("This is a test entry.");    
-                fw.close();    
-                //file append code here
-                
+                String payload = in.readLine();
+                System.out.println("Received payload: " + payload);
+                try (FileWriter fw = new FileWriter("/Users/leon/diary.txt", true)) {
+                    fw.append(payload + "\n");
+                }
+                sendResponse(socket, 200, "Entry received!");
             }
             
             else {
